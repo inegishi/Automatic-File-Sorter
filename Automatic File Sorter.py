@@ -1,17 +1,25 @@
-import os, shutil
-path = r'C:/Users/Derrick Mao/Downloads/'
+import os
+import shutil
+
+path = r'C:/Users/inegi/Documents/iphone photos/'
 file_names = os.listdir(path)
 
-folder_names = ['png files', 'JPG files', 'pdf files']
-for loop in range(0,3):
-    if not os.path.exists(path + folder_names[loop]):
-        print(path + folder_names[loop])
-        os.makedirs(path + folder_names[loop])
+folder_names = ['photos', 'videos']
+
+# Create the folders if they do not exist
+for folder in folder_names:
+    folder_path = os.path.join(path, folder)
+    if not os.path.exists(folder_path):
+        os.makedirs(folder_path)
+
 
 for file in file_names:
-    if ".png" in file and not os.path.exists(path + 'png files/' + file):
-        shutil.move(path + file, path + 'png files/' + file )
-    elif ".pdf" in file and not os.path.exists(path + 'pdf files/' + file):
-        shutil.move(path + file, path + 'pdf files/' + file )
-    elif ".JPG" in file and not os.path.exists(path + 'JPG files/' + file):
-        shutil.move(path + file, path + 'JPG files/' + file )
+    file_path = os.path.join(path, file)
+
+    if file.lower().endswith(('.png', '.jpg', '.jpeg')):
+        if not os.path.exists(os.path.join(path, 'photos', file)):
+            shutil.move(file_path, os.path.join(path, 'photos', file))
+
+    elif file.lower().endswith(('.mov', '.mp4')):
+        if not os.path.exists(os.path.join(path, 'videos', file)):
+            shutil.move(file_path, os.path.join(path, 'videos', file))
